@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "hash_algorithm": "sha256",
+  "artifacts": {
+    "artifacts/cfp_sensitivity.pt": "eb17d146e5b8c8967fcb9f9f195c56d3bbb8c314b32d72d954b4302bc15dc411",
+    "artifacts/medical_priors.pt": "907f1cd5f6bf72d794a2c9799a37d272f42858cb3c120cf8725e621288bfa570",
+    "artifacts/encoder_weights.pt": "11fed8398b1153caef6d1433e7a2d9740a0ec2bc1835e54c495f4b6f33c9c040",
+    "artifacts/adapters/internvl2-2b.pt": "a0b514bb60f44f0aee43ac96a97f2c42e07b6628194a971436ee70d7534e4d22",
+    "artifacts/adapters/llava-med-7b.pt": "9e2fb40ea9ef1faf680cdef2c32a653093ac682b631f10d90e63429b8af7c739",
+    "artifacts/adapters/qwen2vl-2b.pt": "f615614253aa59f50e9d4c566ef6659097b7eb4c049f9eac569affd860f23adc",
+    "artifacts/fdbr_calibration_development.pt": "51d018f0189db573fb2467fe75f2d94c6c6ba30e093c1058aedf1c8dc74ca8d1",
+    "artifacts/encoder_weights_continuous.pt": "7b06478e5e4e1426e966217e73279dfb905004e4f6cafae7c2fe912cdf03e243",
+    "artifacts/encoder_weights_continuous.pt.json": "7e9872e00d3c5ebe9a3fc457a6bd230d2cfbb5180cc21a476e25bc9d52f369ea",
+    "artifacts/adapters/internvl2-2b-fullstudent.pt": "552a060f271f410a751511a19568616add9749b4108af168c9b57640b0aa7d3a",
+    "artifacts/adapters/internvl2-2b-spatial.pt": "8bde4f255530839b6225bd6cae6e5e01779486acf03c934ff3326636757cd480",
+    "artifacts/fdbr_finding_probe.pt": "02e0ee04ca6fbd0cd48afe97e030e87ad62275b14bd68456424caf448faa0dad",
+    "artifacts/adapters/qwen2vl-2b-fullstudent.pt": "303c0273a296749e8e77f85c9fdf208ee82639cd9d33c782842b108237ae8b39",
+    "artifacts/adapters/qwen2vl-2b-spatial.pt": "6cec8ae5cf9707f90da906d9535d4364ed4d19016ede6aaf2240d8218a289a5e",
+    "artifacts/fdbr_calibration_pertoken.pt": "8f5ea824c28327364fec898adfedd9053c080f7849196e97c09d8f3f0476a908",
+    "artifacts/spatial_quadratic_development.pt": "07418317c7261b424f35d2b5e51f5a902e25719d7844c9817effc0b025270aff",
+    "artifacts/spatial_quadratic_diagnostic.pt": "b1a3bcbb960654d6012156c67c2a7bdf23c12e128b3f1e9f1e9db9154de91127",
+    "artifacts/adapters/qwen2vl-2b-diagnostic-clean.pt": "a862608a798bb18056bd484bd40636ed99733d1ef235afb04d1acbc50ca6c566",
+    "artifacts/adapters/qwen2vl-2b-diagnostic-dp.pt": "63cf50436edcc9c8d0ab5fcab2986d32ef17742eaf9dbdd53d02ccaa082be07b",
+    "artifacts/adapters/internvl2-2b-diagnostic-clean.pt": "072a83b706a4a36e8a5ba383cdac24faafe5745bcb5236b1cd2ebf53114dd4da",
+    "artifacts/adapters/internvl2-2b-diagnostic-dp.pt": "4e0c3ed15926f00eec0e19975dcbfdbdf93b490bbedc3bc1eecfd651ac789b90"
+  }
+}

@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+title: "FHEViT: research code for private chest-radiograph VLM representations"
+message: "If this software supports published work, please cite this repository and the relevant upstream datasets and model papers."
+type: software
+version: 0.4.0
+date-released: 2026-10-29
+authors:
+  - family-names: Jiang
+    given-names: Luchang
+repository-code: "https://github.com/FinalSunFlower/FHEViT"
+url: "https://github.com/FinalSunFlower/FHEViT"
+license: Apache-2.0
+abstract: >-
+  Research code for evaluating chest-radiograph visual representations, privacy
+  leakage after decryption, and reduced CKKS inference blocks. The software does
+  not establish clinical readiness or post-release image privacy.
+keywords:
+  - fully homomorphic encryption
+  - homomorphic encryption
+  - CKKS
+  - medical imaging
+  - chest radiography
+  - vision-language models
+  - medical vision-language models
+  - privacy evaluation
+  - representation privacy
+  - feature inversion
+  - image reconstruction
+  - reproducible research

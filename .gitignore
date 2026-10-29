@@ -1,0 +1,105 @@
+# ============================================================
+# FHEViT local-data and build-output exclusions
+# ============================================================
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# ---- Virtual environments ----
+.venv/
+venv/
+env/
+ENV/
+
+# ---- Testing / Coverage ----
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+cache/
+
+# ---- Type checkers ----
+.mypy_cache/
+.pyre/
+.pytype/
+.ruff_cache/
+
+# ---- IDE / Editor ----
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+*.ipynb
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Logs ----
+*.log
+logs/
+runs/
+tensorboard/
+events.out.tfevents.*
+
+# ---- FHEViT project-specific ----
+# Reproducible experiment caches and external model snapshots
+experiments/.cache/
+
+# Patient data, identifiers, derived representations, and local model weights.
+# The READMEs explain how to provision these assets without publishing them.
+/data/**
+!/data/README.md
+!/data/README.zh-CN.md
+/models/**
+!/models/README.md
+/artifacts/**
+!/artifacts/README.md
+/experiments/results/**
+!/experiments/results/README.md
+/private-client/**
+/docs/handoff/work/
+/docs/handoff/work/**
+/docs/handoff/DATA_REGISTRY.md
+/docs/handoff/CONTAMINATION_REPORT.md
+/docs/handoff/experiment_ledger.json
+/docs/handoff/PROGRESS.md
+/docs/handoff/FINAL_REPORT.md
+# Model weights and tensor checkpoints
+*.float32
+*.safetensors
+*.sqlite
+*.db
+*.pt
+
+# Trae / agent internal
+.trae/cache/
+.trae/tmp/
+
+# ---- Outputs ----
+outputs/
+private-client/
+results_tmp/
+*.tmp
+*.bak
+
+# Proposed full-system diagram is a design target, not a measured implementation.
+/figures/FIGURE1_PROMPT.md
+/figures/figure1_system_architecture.png

@@ -1,0 +1,76 @@
+[project]
+name = "fpavlm"
+version = "0.4.0"
+description = "Research code for chest-radiograph representation privacy and reduced CKKS inference"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "Apache-2.0"
+keywords = [
+    "fully homomorphic encryption",
+    "CKKS",
+    "medical imaging",
+    "chest radiograph",
+    "representation privacy",
+    "vision-language models",
+    "privacy leakage",
+]
+
+dependencies = [
+    "torch>=2.1.0",
+    "numpy>=1.24.0",
+    "Pillow>=9.0.0",
+    "tenseal>=0.3.14",
+    "scikit-learn>=1.3.0",
+]
+
+[project.optional-dependencies]
+experiments = [
+    "scikit-image>=0.22.0",
+    "matplotlib>=3.7.0",
+    "lpips>=0.1.4",
+    "torchxrayvision>=1.2.0",
+    "scipy>=1.10.0",
+    "torchvision>=0.16.0",
+]
+llm = [
+    "transformers>=4.50.0",
+    "accelerate>=0.25.0",
+    "bitsandbytes>=0.41.0",
+    "sentence-transformers>=2.2.0",
+    "torchvision>=0.16.0",
+]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0",
+    "scikit-image>=0.22.0",
+]
+
+[project.scripts]
+fpavlm-quickstart = "fpavlm.pipeline:cli_quickstart"
+fpavlm-privacy-check = "fpavlm.cipher_native.dp_accountant:cli_privacy_check"
+
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["fpavlm*"]
+exclude = ["data*", "experiments*", "models*", "tests*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+explicit_package_bases = true
+
+[[tool.mypy.overrides]]
+module = ["sklearn.*", "tenseal"]
+ignore_missing_imports = true
