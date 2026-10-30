@@ -1,7 +1,7 @@
 """Qwen2-VL-2B LLM Adapter — full plug-and-play implementation (v167).
 
 WHY Qwen2-VL-2B:
-  - SOTA small VLM (2B params, Qwen2-1.5B backbone + ViT-based vision encoder)
+  - small VLM (2B params, Qwen2-1.5B backbone + ViT-based vision encoder)
   - 4-bit NF4 quantization: LLM backbone only ~1.5GB VRAM (4-bit); total with
     unquantized ViT vision encoder ~4GB VRAM. Both fit in 4070 8GB alongside
     the FHE pipeline. The ~1.5GB figure (cited in fpavlm/llm/__init__.py) refers

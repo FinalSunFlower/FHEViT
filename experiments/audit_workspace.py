@@ -172,6 +172,8 @@ def render(records):
                   "| [experiments/results/README.md](experiments/results/README.md) | Local result-output policy |",
                   "| [docs/handoff/STATUS.md](docs/handoff/STATUS.md) "
                   "| Current scientific status; raw patient-level outputs are local-only |",
+                  "| [docs/handoff/ARCHITECTURE_CURRENT.md](docs/handoff/ARCHITECTURE_CURRENT.md) "
+                  "| Current measured workflow, architecture diagram, and trust boundaries |",
                   "| [RELATED_WORK.md](RELATED_WORK.md) | Selected primary literature and bounded positioning |",
                   "| [EVALUATION_PROTOCOL.md](EVALUATION_PROTOCOL.md) "
                   "| Chronological preregistered rules and amendments |",
@@ -183,7 +185,8 @@ def render(records):
                   "| data/, models/, artifacts/, private-client/, experiments/results/ "
                   "| Local-only inputs, model snapshots, derived weights, and private state |",
                   "| Long chronological experiment logs | Retained locally; refer to omitted patient-level JSON |",
-                  "| figures/ | Aggregate learning-curve figures; local source data and results are excluded |", "",
+                  "| [figures/README.md](figures/README.md) | Aggregate learning-curve figures; "
+                  "local source data and results are excluded |", "",
                   "Run `python experiments/audit_workspace.py --check` after code or document",
                   "changes. The map includes every Python file under fpavlm/, experiments/, and",
                   "tests/, and tools/. Large source data and trained assets are not distributed by default.", ""])

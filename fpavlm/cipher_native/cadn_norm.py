@@ -1,6 +1,7 @@
 """CADN: Client-Assisted Dynamic Normalization — EXACT LayerNorm via CA-FHE.
 
-v165 BREAKTHROUGH INNOVATION — the third instance of the CA-FHE paradigm:
+v165 historical CA-FHE baseline — the third instance of the CA-FHE paradigm in
+this codebase:
 
   CANR (v116): client refreshes x           (plaintext identity: x → x)
   CAS  (v152): client refreshes x + x²      (plaintext square: eliminates cipher×cipher)

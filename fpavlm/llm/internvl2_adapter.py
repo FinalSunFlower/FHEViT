@@ -1,7 +1,7 @@
 """InternVL2-2B LLM Adapter — full plug-and-play implementation (v170 FIX).
 
 WHY InternVL2-2B:
-  - SOTA small VLM (2B params, InternLM2.5-1.8B backbone + InternViT-300M)
+  - small VLM (2B params, InternLM2.5-1.8B backbone + InternViT-300M)
   - 4-bit NF4 quantization → ~1.5GB VRAM (fits in 4070 8GB alongside FHE pipeline)
   - Strong general VLM performance (MMBench 73.5, MME 1755)
   - Active maintenance (HuggingFace + OpenGVLab)

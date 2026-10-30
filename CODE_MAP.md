@@ -104,7 +104,7 @@ reproduction baseline; import absence alone is not a deletion criterion.
 | [fpavlm/cipher_native/medical_concept_adapter.py](fpavlm/cipher_native/medical_concept_adapter.py) | MedicalConceptAdapter: Plug-and-Play LLM Interface for FHE ViT (v129 PCSD). | `compute_bilinear_upsample_matrix`, `MedicalConceptAdapter` |
 | [fpavlm/cipher_native/noise_resilient_encoder.py](fpavlm/cipher_native/noise_resilient_encoder.py) | Noise-resilient medical ViT encoder for CKKS inference. | `NoiseResilientMAViTEncoder` |
 | [fpavlm/cipher_native/pbsr_scheduler.py](fpavlm/cipher_native/pbsr_scheduler.py) | Position-Based Selective Refresh (PBSR) for Medical FHE-ViT. | `PBSRMask`, `PBSRScheduler`, `compute_pbsr_lbr_speedup` |
-| [fpavlm/cipher_native/perceiver_decoder.py](fpavlm/cipher_native/perceiver_decoder.py) | PerceiverDecoder: Server-Side Non-Linear Decoder for FHE-VLM (v129 PCSD, v149+). | `MagnitudeCalibratedNorm`, `CrossAttentionLayer`, `DiseasePriorModulation`, `PerceiverDecoder` |
+| [fpavlm/cipher_native/perceiver_decoder.py](fpavlm/cipher_native/perceiver_decoder.py) | PerceiverDecoder retained for the historical interactive FHE-VLM path. | `MagnitudeCalibratedNorm`, `CrossAttentionLayer`, `DiseasePriorModulation`, `PerceiverDecoder` |
 | [fpavlm/cipher_native/poly_norm.py](fpavlm/cipher_native/poly_norm.py) | PolyNorm: Polynomial LayerNorm Replacement for FHE-Native Medical ViT. | `PolyNorm` |
 | [fpavlm/cipher_native/refresh_controller.py](fpavlm/cipher_native/refresh_controller.py) | Runtime controller that turns LBR + PBSR plans into refresh actions. | `RefreshAction`, `RefreshController`, `select_ciphertexts`, `merge_ciphertexts` |
 | [fpavlm/cipher_native/spectral_bounded.py](fpavlm/cipher_native/spectral_bounded.py) | SpectralBoundedLinear: Magnitude-controlled linear layer for FHE. | `SpectralBoundedLinear` |
@@ -131,7 +131,7 @@ reproduction baseline; import absence alone is not a deletion criterion.
 | [fpavlm/llm/embedding_adapter.py](fpavlm/llm/embedding_adapter.py) | Server-private cross-LLM visual embedding adapter. | `LLMEmbeddingAdapter` |
 | [fpavlm/llm/interface.py](fpavlm/llm/interface.py) | Typed interfaces and registry for local Transformers VLM language backends. | `LLMInterface`, `LLMRegistry` |
 | [fpavlm/llm/internvl2_adapter.py](fpavlm/llm/internvl2_adapter.py) | InternVL2-2B LLM Adapter — full plug-and-play implementation (v170 FIX). | `patch_internvl2_for_transformers_4_50`, `InternVL2Adapter` |
-| [fpavlm/llm/noise_aware_decoding.py](fpavlm/llm/noise_aware_decoding.py) | Noise-Aware Decoding for FHE-VLM (v166 Innovation 23, v168 ACTIVELY DEPLOYED). | `TopNSigmaLogitProcessor`, `UncertaintyBoundedLogitProcessor`, `generate_perturbed_copies`, `semantic_similarity_matrix`, `mbr_select`, `MBRReport`, `noise_aware_generate`, `NoiseAdaptiveTemperatureProcessor`, `compute_noise_adaptive_temperature`, `compute_noise_calibrated_top_n`, `cnad_generate` |
+| [fpavlm/llm/noise_aware_decoding.py](fpavlm/llm/noise_aware_decoding.py) | Noise-aware decoding components retained for the historical FHE-VLM pipeline. | `TopNSigmaLogitProcessor`, `UncertaintyBoundedLogitProcessor`, `generate_perturbed_copies`, `semantic_similarity_matrix`, `mbr_select`, `MBRReport`, `noise_aware_generate`, `NoiseAdaptiveTemperatureProcessor`, `compute_noise_adaptive_temperature`, `compute_noise_calibrated_top_n`, `cnad_generate` |
 | [fpavlm/llm/qwen2vl_adapter.py](fpavlm/llm/qwen2vl_adapter.py) | Qwen2-VL-2B LLM Adapter — full plug-and-play implementation (v167). | `Qwen2VLAdapter` |
 
 ## Tests
@@ -181,13 +181,14 @@ reproduction baseline; import absence alone is not a deletion criterion.
 | [artifacts/README.md](artifacts/README.md) | Local checkpoint provenance and release boundary |
 | [experiments/results/README.md](experiments/results/README.md) | Local result-output policy |
 | [docs/handoff/STATUS.md](docs/handoff/STATUS.md) | Current scientific status; raw patient-level outputs are local-only |
+| [docs/handoff/ARCHITECTURE_CURRENT.md](docs/handoff/ARCHITECTURE_CURRENT.md) | Current measured workflow, architecture diagram, and trust boundaries |
 | [RELATED_WORK.md](RELATED_WORK.md) | Selected primary literature and bounded positioning |
 | [EVALUATION_PROTOCOL.md](EVALUATION_PROTOCOL.md) | Chronological preregistered rules and amendments |
 | [pyproject.toml](pyproject.toml), [LICENSE](LICENSE), [.gitignore](.gitignore), [.gitattributes](.gitattributes), [.editorconfig](.editorconfig) | Packaging, licensing and repository policy |
 | [CITATION.cff](CITATION.cff) | Software citation metadata |
 | data/, models/, artifacts/, private-client/, experiments/results/ | Local-only inputs, model snapshots, derived weights, and private state |
 | Long chronological experiment logs | Retained locally; refer to omitted patient-level JSON |
-| figures/ | Aggregate learning-curve figures; local source data and results are excluded |
+| [figures/README.md](figures/README.md) | Aggregate learning-curve figures; local source data and results are excluded |
 
 Run `python experiments/audit_workspace.py --check` after code or document
 changes. The map includes every Python file under fpavlm/, experiments/, and

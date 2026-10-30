@@ -6,11 +6,12 @@ v164 = v153 (CAS + High-Precision CKKS) + v154 CFP + v156 medical specialization
 The encoder design inherits the v124 LPPN block and adds v152 CAS, v153 high-precision
 CKKS (N=32768), v154 CFP (client-side deterministic privacy), v156 medical priors,
 v164 amplification scales (SYM_SCALE=10, BETA_EFFECT_SCALE=5→20 in v165fix), and v165 CADN (exact
-LayerNorm via client plaintext computation, depth-0). See ARCHITECTURE.md §4 for the
-11 innovations (including ★ 11 CADN) and §7.3–7.4 for v164 training stack.
+LayerNorm via client plaintext computation, depth-0). See
+`docs/handoff/ARCHITECTURE_CURRENT.md` for the current scope and trust boundary.
   - SERVER: ALL private-weight computation under FHE (CADN/PolyNorm + AAPN + PolyAct LPPN + PolyMLP)
   - CLIENT: CANR refresh, optional CAS/CADN, final release decryption, and DP noise.
-  - v165 REAL CKKS e2e (5 OpenI images, beam search num_beams=4 + seed=42): cos_16=1.000000 (5/5 PERFECT),
+  - v165 historical CKKS smoke test (5 OpenI images, beam search num_beams=4 + seed=42):
+    cos_16=1.000000 on the recorded five-image run,
     cos_256=1.000009, rel_l2_16=0.000654 (25× better than v164's 0.0167),
     TF-IDF(FHE,GT)=0.0903 (≥0.09 PASS, +17.1% over v164 greedy's 0.0771)
   - v124 LPPN: [1,1,1] uniform linear PolyAct (eliminates ALL cipher×cipher in
@@ -47,7 +48,7 @@ CKKS PARAMETERS (v165 high-precision + CADN):
   - v164 (non-CADN) max segment depth: 6 (Block + final_norm + W_concept) < 13 budget
 
 SUPPORTED BLOCK TYPES (3 total — v110/v111/v114/v115 DELETED in v125 cleanup):
-  - 'med_fhe_vit_v3' (v118+, RECOMMENDED SOTA): PolyNorm + AAPN + PolyAct
+  - 'med_fhe_vit_v3' (v118+, retained historical baseline): PolyNorm + AAPN + PolyAct
   - 'med_fhe_vit_v2' (v117): PolyNorm + AAPN + Hadamard activation
   - 'med_fhe_vit'   (v116): PolyNorm + shared coeffs + Hadamard
 
@@ -56,7 +57,8 @@ DELETED IN v125 CLEANUP (2026-07-21):
   - 'fhe_native' (v111): FAILED v111.3, cos=0.862
   - 'med_mixer' (v114): FHE-native dense token-mixing, slow at scale
   - 'med_loc_mixer' (v115): FHE-native dilated local token-mixing
-  See EXPERIMENTS_REPORT.md for first-principles analysis of all failures.
+  See `docs/handoff/STATUS.md` and `docs/handoff/CLAIMS_AUDIT.md` for the current
+  evidence and claim boundaries.
 """
 from __future__ import annotations
 
@@ -102,7 +104,7 @@ class NoiseResilientMAViTEncoder(nn.Module):
       = L+2 CANR total. For L=3: 5 CANR (verified in v124 multi-image, N=5).
 
       Max block depth 5 < 13 budget (8 margin).
-      See EXPERIMENTS_REPORT.md v124 section for details.
+      See `docs/handoff/ARCHITECTURE_CURRENT.md` for the measured CKKS boundary.
     """
 
     def __init__(
@@ -136,11 +138,11 @@ class NoiseResilientMAViTEncoder(nn.Module):
         #   degree=2 (v118): σ(h)=a0+a1·h+a2·h² (Horner: 1 cipher×plain +
         #     1 cipher×cipher). Full nonlinearity, but cipher×cipher creates
         #     CORRELATED noise that drops cos to ~0.9988 (FAIL < 0.999).
-        #   degree=1 (v119/v124 SOTA): σ(h)=a0+a1·h (cipher×plain ONLY). Eliminates
+        #   degree=1 (v119/v124 historical setting): σ(h)=a0+a1·h (cipher×plain ONLY). Eliminates
         #     the dominant cipher×cipher noise. Linear activation — nonlinearity
         #     comes from PolyNorm's c2·x² term. Block depth 6 → 5.
         # v124 LPPN (Linear PolyAct + Polynomial Norm): [1,1,1] uniform schedule
-        #   is the VERIFIED SOTA (cos=0.999711±0.000025, N=5 images, 2026-07-21).
+        #   recorded small smoke-test value was cos=0.999711±0.000025 (N=5 images).
         #   Design philosophy: "Nonlinearity from Norm, not from Activation".
         poly_act_degree: int = 2,
         # v120/v124: Depth-adaptive degree schedule. When provided, overrides poly_act_degree
@@ -151,7 +153,7 @@ class NoiseResilientMAViTEncoder(nn.Module):
         #   None (default): use uniform poly_act_degree for all blocks
         #   [2, 1, 1, 1]: block 0 uses degree=2, rest use degree=1 (good for L=4)
         #   "auto": automatically choose based on num_layers (v124 LPPN for L≤3)
-        #     L≤3: all degree=1 (v124 LPPN SOTA, cos=0.999711±0.000025, N=5)
+        #     L≤3: all degree=1 (v124 LPPN historical setting, cos=0.999711±0.000025, N=5)
         #     L=4-6: first block degree=2, rest degree=1 (v120 depth-adaptive)
         #     L>6: all degree=1 (noise budget tight)
         poly_act_degree_schedule: Optional[List[int]] = None,
@@ -239,7 +241,7 @@ class NoiseResilientMAViTEncoder(nn.Module):
         # H: MedICMC — [R] per-region magnitude salience.
         #    Per-region β in MagnitudeCalibratedNorm (lung amplify, cardiac suppress).
         region_salience: Optional[torch.Tensor] = None,
-        # === v165 CADN: Client-Assisted Dynamic Normalization (BREAKTHROUGH) ===
+        # === v165 CADN: Client-Assisted Dynamic Normalization (historical baseline) ===
         # When True, replaces PolyNorm inside blocks AND CipherRMSNorm final_norm
         # with CADNLayer (EXACT LayerNorm via client callback, depth 0).
         # CADN supersedes PolyNorm: no polynomial approximation, dynamic
@@ -265,9 +267,9 @@ class NoiseResilientMAViTEncoder(nn.Module):
                 f"Unsupported block_type={block_type!r}. Supported types (v116-v124 only): "
                 "'med_fhe_vit' (v116, PolyNorm + Hadamard), "
                 "'med_fhe_vit_v2' (v117, AAPN — per-region PolyNorm coeffs), "
-                "'med_fhe_vit_v3' (v118+, RECOMMENDED SOTA — AAPN + PolyAct). "
+                "'med_fhe_vit_v3' (v118+, retained historical baseline — AAPN + PolyAct). "
                 "v110/v111/v114/v115 blocks were DELETED in v125 cleanup. "
-                "See EXPERIMENTS_REPORT.md for details."
+                "See docs/handoff/STATUS.md for the current evidence."
             )
 
         self.dim = dim
@@ -311,7 +313,7 @@ class NoiseResilientMAViTEncoder(nn.Module):
         if poly_act_degree_schedule == "auto":
             # v124 LPPN: FHE-aware automatic schedule based on depth and noise budget
             if num_layers <= 3:
-                # Shallow: all degree=1 (v124 LPPN SOTA, cos=0.999711±0.000025, N=5)
+                # Shallow: all degree=1 (v124 LPPN historical setting, cos=0.999711±0.000025, N=5)
                 self.poly_act_degree_schedule = [1] * num_layers
             elif num_layers <= 6:
                 # Medium: first block degree=2 (feature formation), rest degree=1
@@ -1318,7 +1320,7 @@ class NoiseResilientMAViTEncoder(nn.Module):
             - degree=2 block: depth 6 (PolyNorm 2 + W_a 1 + polyval 2 + W_o 1)
             v118 (all degree=2): 6 + 1 = 7 < 13 (6 margin)
             v119 (all degree=1): 5 + 1 = 6 < 13 (7 margin)
-            v124 LPPN [1,1,1] (all degree=1): 5 + 1 = 6 < 13 (7 margin) — v164 (prior SOTA)
+            v124 LPPN [1,1,1] (all degree=1): 5 + 1 = 6 < 13 (7 margin) — v164 historical setting
         """
         # v165 CADN: CADN replaces PolyNorm (depth 2→0) and final_norm (depth 1→0).
         # Per-block depth: CADN(0) + W_a(1) + PolyAct(deg-1:1 / deg-2:2) + W_o(1).

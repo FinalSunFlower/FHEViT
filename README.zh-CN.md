@@ -13,8 +13,10 @@ FHEViT 是一套研究代码，用于研究胸片视觉语言模型表示的效�
 - [数据源与本地目录](data/README.zh-CN.md)：数据来源、对应本地路径、准备脚本和发布边界；[English](data/README.md)。
 - [模型快照说明](models/README.md)：模型提供方页面与本地目录；模型文件不会随仓库发布。
 - [当前科学状态](docs/handoff/STATUS.md)：当前结论的唯一摘要入口。
+- [当前架构图](docs/handoff/ARCHITECTURE_CURRENT.md)：区分明文评分主线、缩小 CKKS 测量和历史交互基线。
 - [逐文件代码地图](CODE_MAP.md)：所有 Python 模块、用途和公开符号。
 - [评测协议](EVALUATION_PROTOCOL.md)：数据划分、评分、bootstrap 与非劣效规则。
+- [图表与图表来源说明](figures/README.md)：公开聚合曲线及其本地结果边界。
 - [相关工作](RELATED_WORK.md)：FHE Transformer、医学影像、表示泄露和模型引用。
 - [公开发布流程](docs/PUBLISHING.md)：独立 GitHub 仓库发布、暂存区审核和归档引用步骤。
 

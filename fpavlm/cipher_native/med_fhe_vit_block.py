@@ -703,7 +703,7 @@ class MedFHEBlock(nn.Module):
         # Used by PolyNorm to apply per-region polynomial coefficients
         self.token_regions: Optional[List[int]] = None
 
-        # === v165 CADN: Client-Assisted Dynamic Normalization (BREAKTHROUGH) ===
+        # === v165 CADN: Client-Assisted Dynamic Normalization (historical baseline) ===
         # When use_cadn=True, replace PolyNorm with CADNLayer. CADN computes EXACT
         # LayerNorm via the client (plaintext, trivial) and returns a depth-0 fresh
         # ciphertext. This supersedes PolyNorm's polynomial approximation.

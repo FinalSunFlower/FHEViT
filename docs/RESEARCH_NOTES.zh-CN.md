@@ -34,20 +34,17 @@ TenSEAL 只测量缩小的多项式 CKKS block，不代表完整的 InternViT �
 ## 3. 架构分层
 
 ```text
-胸片/数据清单
-      |
-      v
-preprocessing + NIH cohort rules
-      |
-      v
-FHEViT encoder and anatomical token routing (PyTorch)
-      |
-      +--> plaintext PCA / affine / spatial release --> InternVL2 or Qwen adapter
-      |
-      +--> reduced MedFHEBlock (TenSEAL CKKS) --> depth/finite/cosine diagnostics
-      |
-      +--> privacy_audit / reconstruction / attribute / membership checks
+当前明文评分：胸片/队列 -> 患者级规则与预处理 -> InternVL2-2B token
+             -> 无监督 PCA 前缀 + 岭回归桥 -> 患者级效用比较
+                                      \-> 重建与属性等释放后攻击
+
+独立 CKKS 测量：小维度测试输入 -> MedFHEBlock / TenSEAL -> 深度与数值诊断
+
+历史交互基线：客户端刷新/归一化回调 <-> 服务端密文 block（不同信任模型）
 ```
+
+更完整的可视化和边界说明见 [现行架构图](handoff/ARCHITECTURE_CURRENT.md)。
+PCA 主评分、其他释放原型、独立 CKKS block 与历史交互路径不是一条端到端加密流水线。
 
 代码分组如下；每个文件和公开符号已经逐项列在 `CODE_MAP.md`。
 
@@ -90,13 +87,18 @@ FHEViT encoder and anatomical token routing (PyTorch)
 
 ## 6. 公开发布清单
 
-- [ ] `pytest` 全部通过，`audit_workspace --check` 通过；
-- [ ] `tools/public_release_check.py` 通过；
-- [ ] Git 暂存区不包含 `data/`、`models/`、`artifacts/`、`private-client/`、
-  `experiments/results/`、`.venv/` 或 `docs/handoff/work/`；
-- [ ] 没有本机绝对路径、访问令牌、私钥、病例 ID、报告文本或未授权模型文件；
-- [ ] README、环境说明、许可证、CITATION.cff 和相关工作链接齐全；
-- [ ] 所有数字都能回链到协议和结果 JSON，未把开发集结论写成确认集结论。
+截至本次发布审计，以下检查已完成：
+
+- `pytest`、`audit_workspace --check` 和 `tools/public_release_check.py` 均通过；
+- Git 跟踪内容不包含 `data/`、`models/`、`artifacts/`、`private-client/`、
+  `experiments/results/`、`.venv/` 或 `docs/handoff/work/` 中的本地资产，这些目录只保留说明索引；
+- 发布文本扫描未发现本机绝对路径、访问令牌或私钥；Git 跟踪树未包含病例级数据、原始报告、
+  数据集影像或模型权重，公开图表为已检查的聚合曲线；
+- README、环境说明、Apache-2.0 许可证、`CITATION.cff`、相关工作和复现边界文档齐全；
+- 公开数字均回链到冻结协议与本地结果字段，并明确标注开发集、封存确认集和未完成项目。
+
+这是一份可重复运行的发布审计记录，不代表数据、模型或聚合结果可以脱离提供方条款
+随仓库重新分发。
 
 ## 7. 引用起点
 

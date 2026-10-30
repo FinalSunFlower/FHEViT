@@ -82,6 +82,7 @@ result; do not turn a local result JSON into a public patient-level artifact.
 ## 5. Public citation
 
 Cite this software using [`../CITATION.cff`](../CITATION.cff), and cite the original
-dataset and model papers listed in [`../RELATED_WORK.md`](../RELATED_WORK.md). Before
-release, the maintainer must fill the software authors and repository URL in
-`CITATION.cff`; no author or URL is invented by this guide.
+dataset and model papers listed in [`../RELATED_WORK.md`](../RELATED_WORK.md). The
+public release already records the software author, version, release date, license,
+and repository URL in `CITATION.cff`; update those fields only when preparing a new
+version or adding a verified archival DOI.

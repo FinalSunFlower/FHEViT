@@ -6,7 +6,7 @@ v170 HONEST CLEANUP:
     Risks breaking v165 cos=1.000000 (the project's headline result). The 16× cipher
     reduction is real but the integration cost is too high for the benefit.
   - MAFO-B (noise-budget-aware CANR schedule): DELETED. INCOMPATIBLE with the CADN
-    path (deployed SOTA). CADN requires per-block decrypt to compute z_norm for the
+    path (current historical default). CADN requires per-block decrypt to compute z_norm for the
     NEXT block, so CANR CANNOT be skipped. MAFO-B's "40% CANR reduction" applies
     ONLY to the v164 PolyNorm path (legacy ablation, cos=0.9997 not 1.0).
   - MAFO-C (medical-domain-informed scale selection): KEPT, DEPLOYED. Wired into

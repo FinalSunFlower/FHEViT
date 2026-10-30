@@ -22,7 +22,8 @@ DemNull-FDBR FIX:
 LIMITATION:
   Orthogonality to selected linear directions does not bound arbitrary
   attribute-inference AUC or nonlinear reconstruction. Confirmation and final
-  holdout failures are retained in EXPERIMENTS_REPORT.md. No universal AUC
+  holdout failures are retained in the local experiment record and summarized in
+  `docs/handoff/STATUS.md`. No universal AUC
   bound, threshold pass, or diagnostic covariance retention is asserted.
 
 PRIVACY COMPOSITION:

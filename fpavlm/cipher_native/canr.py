@@ -401,15 +401,18 @@ class ClientCANREngine:
 class ServerCANREngine:
     """Server-side CANR Engine: NO secret_key, can only do homomorphic ops.
 
-    Privacy guarantee:
+    Key-separation boundary in this implementation:
     - Server can perform cipher×plain, cipher×cipher, cipher+cipher
     - Server CANNOT decrypt (no secret_key in context)
     - Server sends exhausted ciphertexts to client for CANR refresh
-    - Server NEVER sees plaintext
+    - Server code path does not expose decryption or plaintext features
 
     This enforces the two-setting requirement:
     - Server holds model params, does most computation (FHE-based)
     - Server cannot access raw image data (no decrypt capability)
+
+    This does not cover side channels, metadata, client behavior, or privacy of
+    representations that are deliberately decrypted and released elsewhere.
     """
 
     def __init__(self, client_engine: ClientCANREngine):

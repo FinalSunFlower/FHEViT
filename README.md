@@ -19,10 +19,15 @@ claim that encrypted inference preserves image privacy.
   directories; model files are never bundled.
 - [Current status](docs/handoff/STATUS.md): the only authoritative summary of
   the current scientific conclusions.
+- [Current architecture](docs/handoff/ARCHITECTURE_CURRENT.md): an editable
+  diagram separating scored plaintext work, the reduced CKKS measurement, and
+  retained interactive baselines.
 - [Code map](CODE_MAP.md): every maintained Python module under `fpavlm/`,
   `experiments/`, `tests/`, and `tools/`.
 - [Evaluation protocol](EVALUATION_PROTOCOL.md): frozen cohort, split, scoring,
   bootstrap, and non-inferiority rules.
+- [Figures and figure provenance](figures/README.md): aggregate learning curves and
+  the boundary between public figures and local-only source results.
 - [Related work](RELATED_WORK.md): selected primary literature and a bounded
   novelty statement.
 - [Public release procedure](docs/PUBLISHING.md): standalone GitHub publication,

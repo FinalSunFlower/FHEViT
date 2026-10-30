@@ -93,16 +93,16 @@ def plot_curve(curve, destination, coordinate_ylim=(-10, 10), predictor_label="F
 
     plt.rcParams.update({
         "font.family": "DejaVu Sans",
-        "font.size": 15,
+        "font.size": 10.5,
         "axes.spines.right": False,
         "axes.spines.top": False,
-        "axes.linewidth": 2.0,
+        "axes.linewidth": 1.0,
         "legend.frameon": False,
         "svg.fonttype": "none",
         "pdf.fonttype": 42,
     })
     counts = [row["training_patients"] for row in curve]
-    figure, axes = plt.subplots(1, 2, figsize=(10.2, 4.3))
+    figure, axes = plt.subplots(1, 2, figsize=(11.4, 4.6))
 
     def series(key):
         values = np.array([row[key]["mse_improvement_over_mean"] * 100 for row in curve])
@@ -125,20 +125,26 @@ def plot_curve(curve, destination, coordinate_ylim=(-10, 10), predictor_label="F
                      linewidth=2, capsize=3, label=predictor_label)
     axes[0].set_xlabel("Training patients")
     axes[0].set_ylabel("Held-out MSE change vs mean (%)")
-    axes[0].set_title("Prefix reconstruction")
-    axes[0].legend()
+    axes[0].set_title("Prefix reconstruction", fontsize=11.5)
+    axes[0].legend(fontsize=8.5)
     axes[1].axhline(0, color="#CFCECE", linewidth=1.5, zorder=0)
     axes[1].errorbar(counts, coordinates, yerr=coordinate_error, color="#0F4D92", marker="o",
                      linewidth=2, capsize=3, label=predictor_label)
     axes[1].set_xlabel("Training patients")
     axes[1].set_ylabel("Held-out coordinate fit (%)")
-    axes[1].set_title("Oracle PCA-4 coordinates")
+    axes[1].set_title("Oracle PCA-4 coordinates", fontsize=11.5)
     if coordinate_ylim is not None:
         axes[1].set_ylim(*coordinate_ylim)
-    axes[1].legend()
+    axes[1].legend(fontsize=8.5)
     for axis in axes:
         axis.set_xticks(counts)
-    figure.tight_layout(pad=0.45)
+        axis.tick_params(axis="both", labelsize=9)
+    figure.text(
+        0.5, 0.015,
+        "Development-only diagnostic; not clinical performance or encrypted inference.",
+        ha="center", va="bottom", fontsize=8,
+    )
+    figure.tight_layout(pad=0.6, rect=(0, 0.07, 1, 1))
     destination.parent.mkdir(parents=True, exist_ok=True)
     figure.savefig(destination.with_suffix(".png"), dpi=300)
     figure.savefig(destination.with_suffix(".pdf"))

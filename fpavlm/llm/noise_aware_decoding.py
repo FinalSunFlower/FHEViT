@@ -1,12 +1,10 @@
-"""Noise-Aware Decoding for FHE-VLM (v166 Innovation 23, v168 ACTIVELY DEPLOYED).
+"""Noise-aware decoding components retained for the historical FHE-VLM pipeline.
 
-Solves the autoregressive butterfly effect identified in the 2026-07-25 audit:
-even with cos(FHE_16, plain_16) = 1.000000, 2/5 reports diverge (TF-IDF(plain,
-FHE) = 0.7296). Root cause: FHE noise ~1e-5 sits in the LLM's "chaotic critical
-zone" (1e-14 triggers divergence per Florida State 2025 LLM numerical stability
-study), where small perturbations get amplified through 200 autoregressive steps.
+The module explores decoding behavior under perturbed visual embeddings. Small
+sample experiments are diagnostic only and do not establish robust generation,
+clinical report quality, or an FHE privacy guarantee.
 
-v168 INTEGRATION (closes the v167 dead-code gap):
+Historical integration notes (v168):
   In v167, the TopNSigmaLogitProcessor and UncertaintyBoundedLogitProcessor
   classes were defined but NEVER instantiated or passed to any generate() call.
   The v168 release closes this gap by:
@@ -15,7 +13,8 @@ v168 INTEGRATION (closes the v167 dead-code gap):
      to HuggingFace model.generate(logits_processor=...)
   3. noise_aware_generate() now ACTIVELY constructs TopNSigmaLogitProcessor and
      UncertaintyBoundedLogitProcessor objects and passes them through
-  The v166 Innovation 23 is now ACTIVELY DEPLOYED, not just defined.
+  These components are available in the retained pipeline; they are not part of
+  the current primary NIH scoring result.
 
 THREE COMPLEMENTARY MECHANISMS (each addresses a different amplification stage):
 
@@ -41,7 +40,7 @@ FIRST-PRINCIPLES ANALYSIS:
     P(diverge) = 1 - (1 - p_step)^N
   For N=200, p_step=0.0025: P = 39.4%  (matches observed 2/5)
   For N=200, p_step=0.0005 (10× reduction via Top-nσ): P = 9.5%  (1/5, acceptable)
-  For N=200, p_step=0.0001 (MBR averaging): P = 2.0%  (0/5, near-perfect)
+  For N=200, p_step=0.0001 (MBR averaging): P = 2.0% (the small run observed 0/5; uncertainty remains large)
 
   Top-nσ reduces p_step by shrinking the effective vocab (fewer "near-tie" tokens).
   MBR reduces p_step by aggregating K independent samples (noise cancels in majority).

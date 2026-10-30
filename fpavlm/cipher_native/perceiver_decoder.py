@@ -1,4 +1,4 @@
-"""PerceiverDecoder: Server-Side Non-Linear Decoder for FHE-VLM (v129 PCSD, v149+).
+"""PerceiverDecoder retained for the historical interactive FHE-VLM path.
 
 v129 INNOVATION: Privacy-Computation Splitting for Non-Linear Decoders (PCSD).
 v149+ DEPLOYMENT: Server-side with PRIVATE weights (0 shared model parameters).
@@ -47,15 +47,17 @@ v149+ DEPLOYMENT DECISION (server-side, PRIVATE weights):
   — the client receives 0 decoder weights. The client only sends 16 decrypted
   (and CFP-noised, v154) features to the server.
 
-  v154 CFP (extended by v157+): The client adds calibrated Gaussian noise to
-  the 16x2560 features before sending. This is REQUIRED for privacy: without
+  v154 CFP (extended by v157+): The client adds Gaussian noise to the
+  16x2560 features before sending. This was evaluated as a mitigation for a
+  specific linkage attack, not as a general privacy guarantee. Without
   CFP, a learned linear attack achieves 20/20 patient identification from the
   plaintext features. With the historical isotropic mechanism at sigma=8x, worst-case
   identification drops to 10% (≤ 2x chance level). v157 path-mismatch fix made
   features MORE invertible (ridge_cos 0.9568 vs v154's 0.8447), so v157+ uses
   ANISOTROPIC CFP (Innovation B) at sigma=24x, achieving 5% identification =
-  chance level (deterministic privacy GUARANTEE). The Perceiver + LLM run on
-  noised features. See ARCHITECTURE.md §7.2 for the v157 recalibration.
+  chance level in that finite attack experiment; this is not a privacy guarantee.
+  The Perceiver + LLM run on noised features. See
+  `docs/handoff/ARCHITECTURE_CURRENT.md` for the current trust boundary.
 
 PRIVACY ANALYSIS (v149+ server-side + v154/v157 CFP):
 

@@ -50,7 +50,7 @@ USAGE (with explicit config):
     pipeline = FHEViTPipeline.from_pretrained(..., config=config)
     report = pipeline.run("image.png")
 
-PRIVACY GUARANTEE:
+DP ACCOUNTING OUTPUT (DEFAULT CONFIGURATION):
     The pipeline returns a DPReport alongside the report. With the corrected
     per-coordinate Gaussian accounting, the default public noise scale gives
     ε≈223.27 at δ=1e-5, which is not a meaningful strong-privacy guarantee.
@@ -1465,7 +1465,7 @@ class PipelineResult:
             "=" * 70,
             f"Report: {self.report[:200]}{'...' if len(self.report) > 200 else ''}",
             "",
-            "Privacy Guarantee: "
+            "DP accounting report: "
             + (
                 self.dp_report.guarantee_str
                 if hasattr(self.dp_report, "guarantee_str")
@@ -1581,7 +1581,7 @@ def cli_quickstart():
     print("RESULTS")
     print("=" * 70)
     print(f"\nReport:\n{result.report}")
-    print(f"\nPrivacy Guarantee: {result.dp_report}")
+    print(f"\nDP accounting report: {result.dp_report}")
     print(f"FHE Depth: {result.fhe_depth}")
     print(f"CANR Refreshes: {result.canr_refresh_count}")
     print("\nTimings:")
